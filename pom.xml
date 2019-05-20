@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>my.examples</groupId>
-	<artifactId>task-list</artifactId>
+	<artifactId>t-list</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>task-list</name>
 	<description>Demo project for Spring Boot</description>
