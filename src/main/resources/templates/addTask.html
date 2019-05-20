@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-3.2.0.min.js"></script>
+    <script type="text/javascript">
+
+    function register(){
+        var title = document.getElementById("title").value;
+        var content = document.getElementById("content").value;
+        var endDate = document.getElementById("endDate").value;
+        var priority = priorities.options[priorities.selectedIndex].value;
+
+        var JSONObject = {'title': title, 'content' : content, 'endDate' : endDate, 'priorityId':priority};
+        var jsonData = JSON.stringify(JSONObject);
+
+        $.ajax({
+            url: '/api/tasks',
+            method: 'post',
+            data: jsonData,
+            async: true,
+            contentType: "application/json",
+            success: function (data) {
+                location.href='/';
+            },
+            error: function (err) {
+                console.log(err.toString());
+            }
+        });
+    }
+</script>
+
+</head>
+<body>
+<div>
+    <p>Todo 제목</p>
+    <input type="text" id="title">
+    <p>Todo 내용</p>
+    <input type="text" id="content">
+    <p>마감 날짜</p>
+    <input type="date" id="endDate" min="local.">
+    <p>우선순위</p>
+    <select name="priorities" id="priorities" style="margin-left:7%;">
+        <option th:each="priority : ${priorities}" th:value="${priority.priorityId}" th:text="${priority.name}"></option>
+    </select>
+</div>
+
+<div>
+    <input th:onclick="'register()'" id="register" type="button" value="등록" style="width:30%; float:right; color:#666; border:1px solid #f2cc32;background-color:#fff;">
+</div>
+
+</body>
+
+<script>
+    document.getElementById('endDate').valueAsDate = new Date();
+</script>
+</html>

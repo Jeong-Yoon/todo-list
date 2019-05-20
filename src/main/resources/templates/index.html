@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>task-list</title>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-3.2.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/default.css">
+    <script>
+
+        function add() {
+            location.href = '/addTask';
+        }
+
+        function deleteTodo(id) {
+            alert('삭제 하시겠습니까?');
+            $.ajax({
+                url: '/api/tasks/' + id,
+                method: 'delete',
+                async: true,
+                contentType: "application/json",
+                success: function (resp) {
+                    console.log("task 삭제");
+                    location.href = '/';
+                },
+                error: function (err) {
+                    console.log(err.toString());
+                }
+            });
+        }
+
+        function updateGet(dataId) {
+            $.ajax({
+                url: '/api/tasks/'+dataId,
+                method: 'get',
+                async: true,
+                contentType: "application/json",
+                success: function (data) {
+                    console.log("task 수정");
+                    $("#update-title").val(data.title);
+                    $("#update-desc").val(data.content);
+                    // var priority = data.priority.name;
+                    $("#update-endDate").format(data.endDate, 'yyyy-MM-dd');
+                    updatemodal();
+                },
+                error: function (err) {
+                    console.log(err.toString());
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+<h1 style="margin-top:2em; text-align: center; border-bottom: 2px solid powderblue;">Todo List</h1>
+<div class='main-content' id='main'>
+    <div class="bt">
+        <button type="button" class="trigger" id="btnadd" data-toggle="modal" data-target="#myModal" onclick="addmodal()">
+            추가
+        </button>
+    </div>
+    <div class='section'>
+        <div id="task-div">
+            <!--<div class="index" id="index">-->
+            <div class="task" th:each="task: ${taskList}">
+                <div style="overflow: hidden;">
+                    <h3 style="float: left;"><label th:text="${task.title}"></label></h3>
+                    <img style="float: left; height: 1.5em; margin-left:.5em; margin-right: 10em;"
+                         src="/images/edit.png" th:onclick="'updateGet('+${task.id}+')'">
+                    <p style="display:block; float: left; margin-right: 5em;"
+                       th:text="${#dates.format(task.regDate, 'yyyy-MM-dd')}"></p>
+                    <p style="display:block; float: left; margin-right:5em;"
+                       th:text="${#dates.format(task.endDate, 'yyyy-MM-dd')}"></p>
+                    <div th:switch="${task.priority.priorityId}">
+                        <p th:case="1"
+                           style="display:block; margin-left:1em; float: left; width:3em; text-align:center; background-color: red;"
+                           th:text="${task.priority.name}"></p>
+                        <p th:case="2"
+                           style="display:block; margin-left:1em; float: left; width:4.5em; text-align:center; background-color: yellow;"
+                           th:text="${task.priority.name}"></p>
+                        <p th:case="3"
+                           style="display:block; margin-left:1em; float: left; width:3em; text-align:center; background-color: aquamarine;"
+                           th:text="${task.priority.name}"></p>
+                    </div>
+                    <img style="float: right; height: 1em;" src="/images/delete.png"
+                         th:onclick="'deleteTodo('+${task.id}+')'">
+                </div>
+                <div class="task-desc">
+                    <p th:text="${task.content}"></p>
+                </div>
+            </div>
+
+            <!--</div>-->
+        </div>
+    </div>
+    <!-- Modal -->
+
+    <!--등록 모달창-->
+    <div>
+        <!-- 팝업 될 레이어 -->
+        <div class="modal" id="addModal">
+            <div class="modal-content">
+                <span class="close-button" id="add-close" data-dismiss="modal">&times;</span>
+                <h4 class="modal-title">TODO 추가하기</h4>
+                <form>
+                    <div class="form-group">
+                        <label for="form-title" class="col-form-label">제목 : </label>
+                        <input type="text" class="form-control" id="form-title" maxlength="40">
+                    </div>
+                    <div class="form-group" style="margin-top: .5em;">
+                        <label for="form-desc" class="col-form-label">내용 : </label>
+                        <textarea class="form-control" id="form-desc" maxlength="300"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-endDate" class="col-form-label">마감기한 : </label>
+                        <input type="date" class="form-control" id="form-endDate">
+                    </div>
+                    <div>
+                        <label>우선 순위 : </label>
+                        <select name="priorities" id="priorities" style="margin-left:7%;">
+                            <option th:each="priority : ${priorities}" th:value="${priority.priorityId}"
+                                    th:text="${priority.name}"></option>
+                        </select>
+                    </div>
+                    <input type="button" id="add-cancel" value="취소">
+                    <input th:onclick="addTask()" type="button" id="submit" value="보내기">
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!--수정 모달창-->
+    <div>
+        <!-- 팝업 될 레이어 -->
+        <div class="modal" id="updateModal">
+            <div class="modal-content">
+                <span class="close-button" id="update-close" data-dismiss="modal">&times;</span>
+                <h4 class="modal-title">TODO 수정하기</h4>
+                <form>
+                    <div class="form-group">
+                        <label for="update-title" class="col-form-label">제목 : </label>
+                        <input type="text" class="form-control" id="update-title" maxlength="40">
+                    </div>
+                    <div class="form-group" style="margin-top: .5em;">
+                        <label for="update-desc" class="col-form-label">내용 : </label>
+                        <textarea class="form-control" id="update-desc" maxlength="300"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-endDate" class="col-form-label">마감기한 : </label>
+                        <input type="date" class="form-control" id="update-endDate">
+                    </div>
+                    <div>
+                        <label>우선 순위 : </label>
+                        <select name="priorities" id="update-priorities" style="margin-left:7%;">
+                            <option th:each="priority : ${priorities}" th:value="${priority.priorityId}"
+                                    th:text="${priority.name}"></option>
+                        </select>
+                    </div>
+                    <input type="button" id="cancel" value="취소">
+                    <input th:onclick="updateTask()" type="button" id="update-submit" value="수정">
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</body>
+<script>
+    // 모달창
+    function addmodal() {
+        var modal = document.querySelector(".modal[id = addModal]");
+        var trigger = document.querySelector(".trigger");
+        var closeButton = document.querySelector(".close-button");
+        var cancelButton = document.querySelector("#cancel");
+
+        function toggleModal() {
+            modal.classList.toggle("show-modal");
+        }
+
+        function windowOnClick(event) {
+            if (event.target === modal) {
+                toggleModal();
+            }
+        }
+
+        trigger.addEventListener("click", toggleModal);
+        closeButton.addEventListener("click", toggleModal);
+        cancelButton.addEventListener("click", toggleModal);
+        window.addEventListener("click", windowOnClick);
+
+    }
+
+    function updatemodal() {
+        var modal = document.querySelector(".modal[id = updateModal]");
+        var trigger = document.querySelector(".trigger[id = update]");
+        var closeButton = document.querySelector(".close-button");
+        var cancelButton = document.querySelector("#cancel");
+
+        function toggleModal() {
+            modal.classList.toggle("show-modal");
+        }
+
+        function windowOnClick(event) {
+            if (event.target === modal) {
+                toggleModal();
+            }
+        }
+
+        trigger.addEventListener("click", toggleModal);
+        closeButton.addEventListener("click", toggleModal);
+        cancelButton.addEventListener("click", toggleModal);
+        window.addEventListener("click", windowOnClick);
+    }
+
+    function addTask() {
+        var title = document.getElementById("form-title").value;
+        var content = document.getElementById("form-desc").value;
+        var endDate = document.getElementById("form-endDate").value;
+        var priority = priorities.options[priorities.selectedIndex].value;
+
+        var JSONObject = {'title': title, 'content': content, 'endDate': endDate, 'priorityId': priority};
+        var jsonData = JSON.stringify(JSONObject);
+
+        $.ajax({
+            url: '/api/tasks',
+            method: 'post',
+            data: jsonData,
+            async: true,
+            contentType: "application/json",
+            success: function (data) {
+                location.href = '/';
+            },
+            error: function (err) {
+                console.log(err.toString());
+            }
+        });
+    }
+
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("form-endDate").setAttribute("min", today);
+    // document.getElementById("deadline-date-update").setAttribute("min", today);
+</script>
+</html>
