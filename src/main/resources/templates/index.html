@@ -133,40 +133,40 @@
     </div>
 
     <!--수정 모달창-->
-    <div>
-        <!-- 팝업 될 레이어 -->
-        <div class="modal" id="updateModal">
-            <div class="modal-content">
-                <span class="close-button" id="update-close" data-dismiss="modal">&times;</span>
-                <h4 class="modal-title">TODO 수정하기</h4>
-                <form>
-                    <div class="form-group">
-                        <label for="update-title" class="col-form-label">제목 : </label>
-                        <input type="text" class="form-control" id="update-title" maxlength="40">
-                    </div>
-                    <div class="form-group" style="margin-top: .5em;">
-                        <label for="update-desc" class="col-form-label">내용 : </label>
-                        <textarea class="form-control" id="update-desc" maxlength="300"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="update-endDate" class="col-form-label">마감기한 : </label>
-                        <input type="date" class="form-control" id="update-endDate">
-                    </div>
-                    <div>
-                        <label>우선 순위 : </label>
-                        <select name="priorities" id="update-priorities" style="margin-left:7%;">
-                            <option th:each="priority : ${priorities}" th:value="${priority.priorityId}"
-                                    th:text="${priority.name}"></option>
-                        </select>
-                    </div>
-                    <input type="button" id="cancel" value="취소">
-                    <input th:onclick="updateTask()" type="button" id="update-submit" value="수정">
+    <!--<div>-->
+        <!--&lt;!&ndash; 팝업 될 레이어 &ndash;&gt;-->
+        <!--<div class="modal" id="updateModal">-->
+            <!--<div class="modal-content">-->
+                <!--<span class="close-button" id="update-close" data-dismiss="modal">&times;</span>-->
+                <!--<h4 class="modal-title">TODO 수정하기</h4>-->
+                <!--<form>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="update-title" class="col-form-label">제목 : </label>-->
+                        <!--<input type="text" class="form-control" id="update-title" maxlength="40">-->
+                    <!--</div>-->
+                    <!--<div class="form-group" style="margin-top: .5em;">-->
+                        <!--<label for="update-desc" class="col-form-label">내용 : </label>-->
+                        <!--<textarea class="form-control" id="update-desc" maxlength="300"></textarea>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="update-endDate" class="col-form-label">마감기한 : </label>-->
+                        <!--<input type="date" class="form-control" id="update-endDate">-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<label>우선 순위 : </label>-->
+                        <!--<select name="priorities" id="update-priorities" style="margin-left:7%;">-->
+                            <!--<option th:each="priority : ${priorities}" th:value="${priority.priorityId}"-->
+                                    <!--th:text="${priority.name}"></option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                    <!--<input type="button" id="cancel" value="취소">-->
+                    <!--<input th:onclick="updateTask()" type="button" id="update-submit" value="수정">-->
 
-                </form>
-            </div>
-        </div>
+                <!--</form>-->
+            <!--</div>-->
+        <!--</div>-->
 
-    </div>
+    <!--</div>-->
 
 </div>
 </body>
