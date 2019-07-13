@@ -1,174 +1,245 @@
 @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
-*{margin:0; padding:0; box-sizing:border-box;}
 
-a {text-decoration:none; color:#000;}
-img{vertical-align:center;}
-ul {list-style-position:inside;}
-ul li{list-style:none;}
-body{font-family: 'Nanum Gothic', sans-serif;
-    font-size:1.5em;
+/* * {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+} */
+
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+input{
+    border-style: groove;
+    width: 200px;
+}
+
+img {
+	vertical-align: center;
+}
+
+/* ul {
+	list-style-position: inside;
+}
+
+ul li {
+	list-style: none;
+} */
+
+body {
+	margin: 1% 10%;
+	font-family: 'Nanum Gothic', sans-serif;
+	font-size: 1.5em;
 }
 
 img, figure {
-    margin: 0;
-    padding: 0;
-    max-width: 100%;
-    height: auto;
-    line-height: 0; }
+	margin: 0;
+	padding: 0;
+	max-width: 100%;
+	height: auto;
+	line-height: 0;
+}
 
-ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none; }
+/* ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
 
 li {
-    /*margin: 8px 0;*/
-    display: block; }
+	margin: 8px 0;
+	display: block;
+}
 
 li a {
-    display: block; }
+	display: block;
+} */
+
+.todo-header{
+    height: 40px;
+    border-bottom: 1px solid #bdc3c7;
+}
+
+.todo-header-item{
+    float: left;
+}
+
+.todo-div{
+    margin: 2px 0px;
+    border: 2px solid #6495ED;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.todo-display-none{
+    display: none;
+}
+
+.date{
+    top: 0.25rem;
+    font-size: 0.85rem;
+    color: #2C2C2C;
+}
+
+.custom-control-label::before,
+.custom-control-label::after {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.title{
+    padding-left: 10px;
+    padding-right: 5px;
+}
 
 /*****버튼******/
-div.bt {
-    box-sizing: border-box;
-    overflow: hidden;
-    margin-left: 83%;
-    font-size: .5em;
-    text-align: center;
+#add-btn-div {
+	box-sizing: border-box;
+	font-size: .5em;
+	text-align: center;
+	margin: 3px;
 }
 
-div.bt div.bt #btnadd:hover{
-        /*background-color:#F6E34D;*/
+.btn-submit{
+	background: lightskyblue;
+}
+.btn-close{
+	background: lightgray;
 }
 
-div.bt #btnadd {
-    width:5.5em;
-    background: lightskyblue;
-    padding:.5em;
-    /*color:#fff;*/
-    size:1.8em;
-    font-weight:bold;
-    border: none;
-    font-family: 'Nanum Gothic', sans-serif;
+.add-btn {
+	width: 5.5em;
+	background: lightskyblue;
+	padding: .5em;
+	/*color:#fff;*/
+	size: 1.8em;
+	font-weight: bold;
+	border: none;
+	float: right;
+	font-family: 'Nanum Gothic', sans-serif;
 }
 
-
-div.bt div.bt #btnadd{
-    float:right;
-}
-
+/* .add-btn-div #add-btn  {
+	float: right;
+} */
 
 /*************스터디 박스****************/
-.main-content {
-    position: relative;
-    width:100%;
-    margin-top: 5em;
+/* .main-content {
+	position: relative;
+	width: 100%;
+	margin-top: 5em;
 }
 
 .section {
-    width:90%;
-    margin: 1% auto; }
+	width: 90%;
+	margin: 1% auto;
+} */
 
-
-.section #task-div .task{
-    padding:2%;
-    margin-bottom:20px;
-    width:100%;
-    height:100%;
-    border:1px solid lightgray;
-    overflow:hidden;
+/* .section #todo-div .task {
+	padding: 2%;
+	margin-bottom: 20px;
+	width: 100%;
+	height: 100%;
+	border: 1px solid lightgray;
+	overflow: hidden;
 }
 
-div#task-div .task h4{margin-bottom:10px;}
-
+div#todo-div .task h4 {
+	margin-bottom: 10px;
+} */
 
 /*************전체설정****************/
 .left {
-    float: left; }
+	float: left;
+}
 
 .right {
-    float: right; }
+	float: right;
+}
 
 /******modal 창********/
 textarea {
-    height: 100px;
-    width: 250px;
-    background-color: #efefef;
+	height: 100px;
+	width: 250px;
+	background-color: #efefef;
 }
 
-#submit {
-    width: 127px;
-    height: 48px;
-    text-align: center;
-    border: none;
-    margin-top: 20px;
-    cursor: pointer;
+/* #submit {
+	width: 127px;
+	height: 48px;
+	text-align: center;
+	border: none;
+	margin-top: 20px;
+	cursor: pointer;
 }
 
 #submit:hover {
-    color: #fff;
-    background-color: #216282;
-    opacity: 0.9;
-}
+	color: #fff;
+	background-color: #216282;
+	opacity: 0.9;
+} */
 
 #cancel {
-    width: 127px;
-    height: 48px;
-    text-align: center;
-    border: none;
-    margin-top: 20px;
-    cursor: pointer;
+	width: 127px;
+	height: 48px;
+	text-align: center;
+	border: none;
+	margin-top: 20px;
+	cursor: pointer;
 }
 
 #cancel:hover {
-    color: #fff;
-    background-color: #216282;
-    opacity: 0.9;
+	color: #fff;
+	background-color: #216282;
+	opacity: 0.9;
 }
 
-.modal {
-    position: fixed;
-    left: 0%;
-    top: 0%;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    visibility: hidden;
-    transform: scale(1.1);
-    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+/* .modal {
+	position: fixed;
+	left: 0%;
+	top: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	opacity: 0;
+	visibility: hidden;
+	transform: scale(1.1);
+	transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform
+		0.25s;
 }
 
 .modal-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 1rem 1.5rem;
-    height: 350px;
-    width: 400px;
-    border-radius: 0.5rem;
-    overflow: hidden;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	padding: 1rem 1.5rem;
+	height: 350px;
+	width: 400px;
+	border-radius: 0.5rem;
+	overflow: hidden;
 }
 
 .close-button {
-    float: right;
-    width: 1.5rem;
-    line-height: 1.5rem;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 0.25rem;
-    background-color: lightgray;
+	float: right;
+	width: 1.5rem;
+	line-height: 1.5rem;
+	text-align: center;
+	cursor: pointer;
+	border-radius: 0.25rem;
+	background-color: lightgray;
 }
 
 .close-button:hover {
-    background-color: darkgray;
+	background-color: darkgray;
 }
 
 .show-modal {
-    opacity: 1;
-    visibility: visible;
-    transform: scale(1.0);
-    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
-}
+	opacity: 1;
+	visibility: visible;
+	transform: scale(1.0);
+	transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+} */
