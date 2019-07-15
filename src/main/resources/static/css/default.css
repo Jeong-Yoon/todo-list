@@ -102,11 +102,9 @@ li a {
 	margin: 3px;
 }
 
-.btn-submit{
-	background: lightskyblue;
-}
-.btn-close{
-	background: lightgray;
+div.btn div.btn #btnadd:hover {
+	/*background-color:#F6E34D;*/
+	
 }
 
 .add-btn {
@@ -166,27 +164,17 @@ textarea {
 	background-color: #efefef;
 }
 
-/* #submit {
-	width: 127px;
-	height: 48px;
-	text-align: center;
-	border: none;
-	margin-top: 20px;
+#todo-submit {
 	cursor: pointer;
 }
 
-#submit:hover {
+#todo-submit:hover {
 	color: #fff;
 	background-color: #216282;
 	opacity: 0.9;
-} */
+}
 
 #cancel {
-	width: 127px;
-	height: 48px;
-	text-align: center;
-	border: none;
-	margin-top: 20px;
 	cursor: pointer;
 }
 
@@ -222,14 +210,9 @@ textarea {
 	border-radius: 0.5rem;
 	overflow: hidden;
 }
-
+ */
 .close-button {
-	float: right;
-	width: 1.5rem;
-	line-height: 1.5rem;
-	text-align: center;
 	cursor: pointer;
-	border-radius: 0.25rem;
 	background-color: lightgray;
 }
 
@@ -237,7 +220,7 @@ textarea {
 	background-color: darkgray;
 }
 
-.show-modal {
+/* .show-modal {
 	opacity: 1;
 	visibility: visible;
 	transform: scale(1.0);
