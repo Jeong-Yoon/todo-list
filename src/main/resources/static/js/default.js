@@ -102,3 +102,20 @@ $("#todo-submit").click(function() {
 	});
 });
 
+function prev(){
+    if(nowpage <= totalpage && nowpage > 1){
+        nowpage = nowpage - 1;
+        loadToDo(nowpage);
+    }else{
+    	document.getElementById("previous").setAttribute("disabled", "true");
+    }
+}
+
+function next(){
+    if(nowpage < totalpage){
+        nowpage = nowpage + 1;
+        loadToDo(nowpage);
+    }else{
+    	document.getElementById("next").setAttribute("disabled", "true");
+    }
+}
