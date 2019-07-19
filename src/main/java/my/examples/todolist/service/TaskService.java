@@ -4,8 +4,11 @@ import my.examples.todolist.domain.Task;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 public interface TaskService {
     public List<Task> getTaskList();
+    public Page<Task> getTasks(int page);
     public Task getTaskById(Long id);
     public void addTask(Task task);
     public void deleteTask(Long id);

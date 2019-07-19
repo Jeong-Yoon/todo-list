@@ -14,6 +14,31 @@ if (mm < 10) {
 today = yyyy + '-' + mm + '-' + dd;
 document.getElementById("form-endDate").setAttribute("min", today);
 
+loadPage();
+
+function loadPage(page){
+    var url = '/api/tasks'
+        if(page != null){
+            url = url + '?page=' + page
+        }
+    $.ajax({
+		url : url,
+		method : 'get',
+		async : true,
+		contentType : "application/json",
+		success : function(data) {
+			console.log("page 불러오기");
+//			$("#update-title").val(data.title);
+//			$("#update-desc").val(data.content);
+			// var priority = data.priority.name;
+//			$("#update-endDate").format(data.endDate, 'yyyy-MM-dd');
+		},
+		error : function(err) {
+			console.log(err.toString());
+		}
+	});
+}
+
 function deleteTodo(id) {
 	alert('삭제 하시겠습니까?');
 	$.ajax({
@@ -95,6 +120,7 @@ $("#todo-submit").click(function() {
 		contentType : "application/json",
 		success : function(data) {
 			alert("추가 완료.");
+			loadPage(1);
 		},
 		error : function(err) {
 			console.log(err.toString());
@@ -105,7 +131,7 @@ $("#todo-submit").click(function() {
 function prev(){
     if(nowpage <= totalpage && nowpage > 1){
         nowpage = nowpage - 1;
-        loadToDo(nowpage);
+        loadPage(nowpage);
     }else{
     	document.getElementById("previous").setAttribute("disabled", "true");
     }
@@ -114,7 +140,7 @@ function prev(){
 function next(){
     if(nowpage < totalpage){
         nowpage = nowpage + 1;
-        loadToDo(nowpage);
+        loadPage(nowpage);
     }else{
     	document.getElementById("next").setAttribute("disabled", "true");
     }

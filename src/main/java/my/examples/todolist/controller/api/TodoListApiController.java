@@ -5,6 +5,7 @@ import my.examples.todolist.domain.Task;
 import my.examples.todolist.dto.TaskDTO;
 import my.examples.todolist.service.TaskService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -32,6 +33,16 @@ public class TodoListApiController {
     @GetMapping("/{id}")
     public ResponseEntity<Task> update(@PathVariable Long id){
         return new ResponseEntity<>(taskService.getTaskById(id),HttpStatus.OK);
+    }
+    
+    @GetMapping
+    public ResponseEntity<Page<Task>> getTasks(@RequestParam(name = "page", required = false, defaultValue = "1") int page){
+        if(page < 1)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        Page<Task> tasks = taskService.getTasks(page - 1);
+        if(tasks.getTotalPages() < page)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

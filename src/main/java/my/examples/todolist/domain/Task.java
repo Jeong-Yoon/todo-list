@@ -2,6 +2,8 @@ package my.examples.todolist.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +36,7 @@ public class Task {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "priorityId")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Priority priority;
 
     public Task() {
