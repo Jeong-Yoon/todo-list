@@ -15,6 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TaskDTO {
+	private Long id;
     @NotNull
     private String title;
     @Lob
