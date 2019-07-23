@@ -31,7 +31,7 @@ ul li {
 body {
 	margin: 1% 10%;
 	font-family: 'Nanum Gothic', sans-serif;
-	font-size: 1.5em;
+	/* font-size: 1.5em; */
 }
 
 img, figure {
@@ -67,10 +67,11 @@ li a {
 }
 
 .todo-div{
-    margin: 2px 0px;
-    border: 2px solid #6495ED;
+    margin: 5px 0px;
+    border: 1.5px solid lightskyblue;
     border-radius: 8px;
     padding: 10px;
+    
 }
 
 .todo-display-none{
@@ -93,13 +94,19 @@ li a {
     padding-left: 10px;
     padding-right: 5px;
 }
-
+h1{
+	margin: 2em 0 1.5em; 
+	text-align: center; 
+	font-weight: 800;
+}
 /*****버튼******/
 #add-btn-div {
 	box-sizing: border-box;
 	font-size: .5em;
 	text-align: center;
 	margin: 3px;
+	height: 40px;
+    margin: 3px;
 }
 
 div.btn div.btn #btnadd:hover {
@@ -110,7 +117,7 @@ div.btn div.btn #btnadd:hover {
 .add-btn {
 	width: 5.5em;
 	background: lightskyblue;
-	padding: .5em;
+	/* padding: .5em; */
 	/*color:#fff;*/
 	size: 1.8em;
 	font-weight: bold;
@@ -147,15 +154,16 @@ div.btn div.btn #btnadd:hover {
 div#todo-div .task h4 {
 	margin-bottom: 10px;
 } */
-
-/*************전체설정****************/
-.left {
-	float: left;
+.pagination{
+	margin-top: 1em;
+	float: center;
 }
 
-.right {
-	float: right;
+.todo-desc{
+	padding: 13px;
+	color: #6c757d;
 }
+
 
 /******modal 창********/
 textarea {

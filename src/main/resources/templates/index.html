@@ -17,11 +17,9 @@
 </head>
 <body>
 	<div>
-		<h1
-			style="margin-top: 2em; text-align: center; border-bottom: 2px solid powderblue;">Todo
-			List</h1>
+		<h1>Todo List</h1>
 	</div>
-	<div class="add-btn-div">
+	<div id="add-btn-div">
 		<button type="button" class="btn add-btn" data-toggle="modal"
 			data-target="#myModal">추가</button>
 	</div>
@@ -33,7 +31,7 @@
 					class="custom-control form-control-lg custom-checkbox col-sm-7 todo-header-item">
 					<input type="checkbox"
 						class="custom-control-input todo-header-item"
-						th:id="'customCheck'+${task.id}" value=0>
+						>
 					<h3 style="float: left;">
 						<label class="custom-control-label todo-header-item"><h5
 								class="title" th:text="${task.title}"></h5></label>
@@ -65,17 +63,16 @@
 			</div>
 		</div>
 	</div>
-	<div>
+<!-- 	<div>
 		<ul class="pagination justify-content-center">
 			<li class="page-item"><a class="page-link" id="previous" href="#"
 				onclick="prev()">Previous</a></li>
-			<li class="page-item"><a class="page-link" href="#">1</a></li>
-			<li class="page-item"><a class="page-link" href="#">2</a></li>
-			<li class="page-item"><a class="page-link" href="#">3</a></li>
+				  <li class="page-item"><a class="page-link" href="#"><span id="now-page"></span></a></li>
+				  <li class="page-item" id="total-page"><a class="page-link" href="#"><span id="total-page"></span></a></li>
 			<li class="page-item"><a class="page-link" id="next" href="#"
 				onclick="next()">Next</a></li>
 		</ul>
-	</div>
+	</div> -->
 
 
 	<!-- Modal -->

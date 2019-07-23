@@ -100,13 +100,13 @@ function updatemodal() {
 
 $("#todo-submit").click(function() {
 	var title = $("#form-title").val();
-	var content = $("#form-desc").val();
+	var desc = $("#form-desc").val();
 	var endDate = $("#form-endDate").val();
 	var priority = priorities.options[priorities.selectedIndex].value;
 
 	var JSONObject = {
 		'title' : title,
-		'content' : content,
+		'content' : desc,
 		'endDate' : endDate,
 		'priorityId' : priority
 	};
@@ -118,7 +118,7 @@ $("#todo-submit").click(function() {
 		data : jsonData,
 		async : true,
 		contentType : "application/json",
-		success : function(data) {
+		success : function(resp) {
 			alert("추가 완료.");
 			loadPage(1);
 		},

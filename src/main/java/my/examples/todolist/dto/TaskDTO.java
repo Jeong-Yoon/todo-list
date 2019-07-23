@@ -19,7 +19,6 @@ public class TaskDTO {
     @NotNull
     private String title;
     @Lob
-    @NotNull
     private String content;
     @Column(name = "end_date")
     private Date endDate;

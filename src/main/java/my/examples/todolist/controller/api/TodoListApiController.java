@@ -25,8 +25,7 @@ public class TodoListApiController {
         if (bindingResult.hasErrors()){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-        Task task = modelMapper.map(taskDTO, Task.class);
-        taskService.addTask(task);
+        taskService.addTask(taskDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
