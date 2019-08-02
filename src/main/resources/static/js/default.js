@@ -13,8 +13,8 @@ if (mm < 10) {
 }
 today = yyyy + '-' + mm + '-' + dd;
 document.getElementById("form-endDate").setAttribute("min", today);
+document.getElementById("update-form-endDate").setAttribute("min", today);
 
-loadPage();
 
 function loadPage(page){
     var url = '/api/tasks'
@@ -26,12 +26,47 @@ function loadPage(page){
 		method : 'get',
 		async : true,
 		contentType : "application/json",
-		success : function(data) {
+		success : function(resp) {
 			console.log("page 불러오기");
-//			$("#update-title").val(data.title);
-//			$("#update-desc").val(data.content);
-			// var priority = data.priority.name;
-//			$("#update-endDate").format(data.endDate, 'yyyy-MM-dd');
+			totalPage: resp.totalPages;
+            $('#now-page').text(nowPage);
+            if(nowPage!=totalPage){
+            	$('#total-page').text(totalPage);
+            } else{
+            	$('#total-page').hide();
+            }
+            var todoDiv = "#todo-div"
+                var title = ".title"
+                var desc = ".desc"
+                var endDate = ".end-date"
+                var regDate = ".reg-date"
+                var priority = "#priority"
+                var complete = "#customCheck"
+                var todoid = "#todo-id"
+                for(var i = 0; i < resp.numberOfElements; i++){
+                    if( resp.content[i].complete == true){
+                        $( complete+i ).prop("checked" , true);
+                        $( title+i ).addClass("todo-done-text");
+                        $( desc+i ).addClass("todo-done-text");
+                    }else{
+                        $( complete+i ).prop("checked" , false);
+                        $( title+i ).removeClass("todo-done-text");
+                        $( desc+i ).removeClass("todo-done-text");
+                    }
+                }
+/*
+ * $( todoDiv+i ).removeClass('todo-display-none');
+ */                    $( todoid+i ).val(resp.content[i].id);
+                    $( title+i ).text(resp.content[i].title);
+                    $( desc+i).text(resp.content[i].content);
+                    var endDate =resp.content[i].endDate.slice(0,10);
+                    var regDate =resp.content[i].regDate.slice(0,10);
+                    $( regDate+i).text(regDate);
+                    $( endDate+i ).text(endDate);
+                    $( priority+i ).text(resp.content[i].priority);
+                    removePriorityClass(priority+i);
+                    $( priority+i ).addClass(setPriorityClass(resp.content[i].priority));
+            
 		},
 		error : function(err) {
 			console.log(err.toString());
@@ -40,7 +75,6 @@ function loadPage(page){
 }
 
 function deleteTodo(id) {
-	alert('삭제 하시겠습니까?');
 	$.ajax({
 		url : '/api/tasks/' + id,
 		method : 'delete',
@@ -48,6 +82,7 @@ function deleteTodo(id) {
 		contentType : "application/json",
 		success : function(resp) {
 			console.log("task 삭제");
+			alert("삭제 되었습니다.");
 			location.href = '/';
 		},
 		error : function(err) {
@@ -56,46 +91,25 @@ function deleteTodo(id) {
 	});
 }
 
-function updateGet(dataId) {
-	$.ajax({
-		url : '/api/tasks/' + dataId,
-		method : 'get',
-		async : true,
-		contentType : "application/json",
-		success : function(data) {
-			console.log("task 수정");
-			$("#update-title").val(data.title);
-			$("#update-desc").val(data.content);
-			// var priority = data.priority.name;
-			$("#update-endDate").format(data.endDate, 'yyyy-MM-dd');
-			updatemodal();
-		},
-		error : function(err) {
-			console.log(err.toString());
-		}
-	});
-}
-
-function updatemodal() {
-	var modal = document.querySelector(".modal[id = updateModal]");
-	var trigger = document.querySelector(".trigger[id = update]");
-	var closeButton = document.querySelector(".close-button");
-	var cancelButton = document.querySelector("#cancel");
-
-	function toggleModal() {
-		modal.classList.toggle("show-modal");
-	}
-
-	function windowOnClick(event) {
-		if (event.target === modal) {
-			toggleModal();
-		}
-	}
-
-	trigger.addEventListener("click", toggleModal);
-	closeButton.addEventListener("click", toggleModal);
-	cancelButton.addEventListener("click", toggleModal);
-	window.addEventListener("click", windowOnClick);
+function updateGet(id) {
+    $("#update-todo-id").val(id);
+    if(id == null) return;
+    $.ajax({
+        url: '/api/tasks/' + id,
+        method: 'get',
+        async: true,
+        contentType: "application/json",
+        success: function (resp) {
+            $("#update-form-title").val(resp.title);
+            $("#update-form-desc").val(resp.content);
+            var priority = resp.priority;
+            $("select option[value="+priority+"]").attr("selected", true);
+            $("#update-form-endDate").val(resp.endDate.slice(0,10));
+        },
+        error: function (err) {
+            console.log(err.toString());
+        }
+    })
 }
 
 $("#todo-submit").click(function() {
@@ -108,7 +122,7 @@ $("#todo-submit").click(function() {
 		'title' : title,
 		'content' : desc,
 		'endDate' : endDate,
-		'priorityId' : priority
+		'priority' : priority
 	};
 	var jsonData = JSON.stringify(JSONObject);
 
@@ -120,12 +134,51 @@ $("#todo-submit").click(function() {
 		contentType : "application/json",
 		success : function(resp) {
 			alert("추가 완료.");
-			loadPage(1);
+			location.href = '/';
 		},
 		error : function(err) {
 			console.log(err.toString());
 		}
 	});
+});
+
+$("#todo-update").click( function() {
+    console.log('업데이트 시작');
+    var id = $("#update-todo-id").val();
+    var title = $("#update-form-title").val();
+    var desc = $("#update-form-desc").val();
+    var endDate = $("#update-form-endDate").val();
+    var priority = priorities.options[priorities.selectedIndex].value;
+    console.log('update modal: '+id+'/' + title + '/'+ desc + '/' + endDate +'/' + priority);
+    var JSONObject = {
+        'id': id,
+        'title': title,
+        'content' : desc,
+        'priority' : priority,
+        'endDate' : endDate
+     };
+    var jsonData = JSON.stringify(JSONObject);
+    $.ajax({
+        url: '/api/tasks/' + id,
+        method: 'put',
+        data: jsonData,
+        async: true,
+        contentType: "application/json",
+        success: function (resp) {
+            console.log("업데이트 완료");
+            alert("수정 완료");
+            location.reload();
+        },
+        error: function (err) {
+            console.log(err.toString());
+        }
+    });
+    $("#form-title-update").val('');
+    $("#form-desc-update").val('');
+    $('input[name="priorityRadioUpdate"]').prop("checked" , false);
+    $("#deadline-date-update").val('');
+    $("#update-todo-index").val('');
+    $('#updateModal').modal('toggle');
 });
 
 function prev(){

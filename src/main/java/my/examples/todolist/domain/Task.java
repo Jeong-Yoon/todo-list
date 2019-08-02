@@ -1,13 +1,11 @@
 package my.examples.todolist.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
+import my.examples.todolist.util.PriorityType;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -22,6 +20,7 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column (nullable = false)
     private String title;
     @Lob
     private String content;
@@ -31,13 +30,11 @@ public class Task {
     @Column(name = "end_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
     private Date endDate;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private PriorityType priority;
     @Column(columnDefinition="tinyint(1) default 0")
     private boolean complete;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "priorityId")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Priority priority;
 
     public Task() {
         regDate = new Date();

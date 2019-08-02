@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import my.examples.todolist.domain.Task;
 import my.examples.todolist.dto.TaskDTO;
 import my.examples.todolist.service.TaskService;
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +17,12 @@ import javax.validation.Valid;
 @RequestMapping("/api/tasks")
 @RequiredArgsConstructor
 public class TodoListApiController {
-    private final TaskService taskService;
-    private final ModelMapper modelMapper;
+
+    @Autowired
+    private TaskService taskService;
 
     @PostMapping
-    public ResponseEntity todo(@Valid @RequestBody TaskDTO taskDTO, BindingResult bindingResult){
+    public ResponseEntity addTodo(@Valid @RequestBody TaskDTO taskDTO, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
@@ -30,7 +31,7 @@ public class TodoListApiController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> update(@PathVariable Long id){
+    public ResponseEntity<Task> getTask(@PathVariable Long id){
         return new ResponseEntity<>(taskService.getTaskById(id),HttpStatus.OK);
     }
     
@@ -52,9 +53,7 @@ public class TodoListApiController {
         if (taskService.getTaskById(id) == null){
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        Task task = modelMapper.map(taskDTO, Task.class);
-        task.setId(id);
-        taskService.updateTask(task);
+        taskService.updateTask(id,taskDTO);
         return new ResponseEntity(HttpStatus.OK);
     }
 

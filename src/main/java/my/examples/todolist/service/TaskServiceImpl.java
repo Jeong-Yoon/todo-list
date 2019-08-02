@@ -3,9 +3,9 @@ package my.examples.todolist.service;
 import lombok.RequiredArgsConstructor;
 import my.examples.todolist.domain.Task;
 import my.examples.todolist.dto.TaskDTO;
-import my.examples.todolist.repository.PriorityRepository;
 import my.examples.todolist.repository.TaskRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,9 +18,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
-	
-    private final TaskRepository taskRepository;
-    private final PriorityRepository priorityRepository;
+    @Autowired
+    private TaskRepository taskRepository;
 
 
     @Override
@@ -51,7 +50,7 @@ public class TaskServiceImpl implements TaskService {
         task.setTitle(taskDTO.getTitle());
         task.setContent(taskDTO.getContent());
         task.setEndDate(taskDTO.getEndDate());
-        task.setPriority(priorityRepository.getOne(taskDTO.getPriorityId()));
+        task.setPriority(taskDTO.getPriority());
         taskRepository.save(task);
     }
 
@@ -63,7 +62,13 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public void updateTask(Task task) {
+    public void updateTask(Long id, TaskDTO taskDTO){
+        Task task = new Task();
+        task.setId(id);
+        task.setTitle(taskDTO.getTitle());
+        task.setContent(taskDTO.getContent());
+        task.setEndDate(taskDTO.getEndDate());
+        task.setPriority(taskDTO.getPriority());
         taskRepository.save(task);
     }
 }

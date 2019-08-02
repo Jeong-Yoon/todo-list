@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import my.examples.todolist.util.PriorityType;
 
 import javax.persistence.Column;
 import javax.persistence.Lob;
@@ -23,5 +24,5 @@ public class TaskDTO {
     @Column(name = "end_date")
     private Date endDate;
     @NotNull
-    private Long priorityId;
+    private PriorityType priority;
 }
