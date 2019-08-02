@@ -41,8 +41,10 @@
 								src="/images/edit.png" th:onclick="'updateGet('+${task.id}+')'"> -->
 				</div>
 				<span class="todo-header-item col-sm-2 date"
+				<span class="todo-header-item col-sm-2 date reg-date"
 					th:text="${#dates.format(task.regDate, 'yyyy-MM-dd')}"></span> <span
 					class="todo-header-item col-sm-2 date"
+					class="todo-header-item col-sm-2 date end-date"
 					th:text="${#dates.format(task.endDate, 'yyyy-MM-dd')}"></span>
 				<div th:switch="${task.priority.priorityId}">
 					<span th:case="1" class="badge col-sm-2"
@@ -61,6 +63,10 @@
 			<div class="todo-desc">
 				<p th:text="${task.content}"></p>
 			</div>
+	<div class="todo-btn">
+                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#updateModal" th:onclick="'updateGet('+${task.id}+')'">수정</button>
+                <button type="button" class="btn btn-outline-dark" th:onclick="'deleteTodo('+${task.id}+')'">삭제</button>
+            </div>
 		</div>
 	</div>
 <!-- 	<div>
@@ -104,8 +110,8 @@
 					<div>
 						<label>우선 순위 : </label> <select name="priorities" id="priorities"
 							style="margin-left: 7%;">
-							<option th:each="priority : ${priorities}"
-								th:value="${priority.priorityId}" th:text="${priority.name}"></option>
+							<option th:each="priority : ${T(my.examples.todolist.util.PriorityType).values()}"
+								th:value="${priority}" th:text="${priority}"></option>
 						</select>
 					</div>
 				</div>
@@ -122,42 +128,50 @@
 	</div>
 
 	<!--수정 모달창-->
-	<!--<div>-->
-	<!--&lt;!&ndash; 팝업 될 레이어 &ndash;&gt;-->
-	<!--<div class="modal" id="updateModal">-->
-	<!--<div class="modal-content">-->
-	<!--<span class="close-button" id="update-close" data-dismiss="modal">&times;</span>-->
-	<!--<h4 class="modal-title">TODO 수정하기</h4>-->
-	<!--<form>-->
-	<!--<div class="form-group">-->
-	<!--<label for="update-title" class="col-form-label">제목 : </label>-->
-	<!--<input type="text" class="form-control" id="update-title" maxlength="40">-->
-	<!--</div>-->
-	<!--<div class="form-group" style="margin-top: .5em;">-->
-	<!--<label for="update-desc" class="col-form-label">내용 : </label>-->
-	<!--<textarea class="form-control" id="update-desc" maxlength="300"></textarea>-->
-	<!--</div>-->
-	<!--<div class="form-group">-->
-	<!--<label for="update-endDate" class="col-form-label">마감기한 : </label>-->
-	<!--<input type="date" class="form-control" id="update-endDate">-->
-	<!--</div>-->
-	<!--<div>-->
-	<!--<label>우선 순위 : </label>-->
-	<!--<select name="priorities" id="update-priorities" style="margin-left:7%;">-->
-	<!--<option th:each="priority : ${priorities}" th:value="${priority.priorityId}"-->
-	<!--th:text="${priority.name}"></option>-->
-	<!--</select>-->
-	<!--</div>-->
-	<!--<input type="button" id="cancel" value="취소">-->
-	<!--<input th:onclick="updateTask()" type="button" id="update-submit" value="수정">-->
+	<div class="modal" id="updateModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
 
-	<!--</form>-->
-	<!--</div>-->
-	<!--</div>-->
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">TODO 수정하기</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
 
-	<!--</div>-->
+				<!-- Modal body -->
+				<div class="modal-body">
+					<input type="hidden" id="update-todo-id">
+					<div class="form-group">
+						<label for="form-title" class="col-form-label">제목 : </label> <input
+							type="text" class="form-control" id="update-form-title" maxlength="40">
+					</div>
+					<div class="form-group" style="margin-top: .5em;">
+						<label for="form-desc" class="col-form-label">내용 : </label>
+						<textarea class="form-control" id="update-form-desc" maxlength="300"></textarea>
+					</div>
+					<div class="form-group">
+						<label for="form-endDate" class="col-form-label">마감기한 : </label> <input
+							type="date" class="form-control" id="update-form-endDate">
+					</div>
+					<div>
+						<label>우선 순위 : </label> <select name="prioritiesUpdate" id="update-priority"
+														style="margin-left: 7%;">
+						<option th:each="priority : ${T(my.examples.todolist.util.PriorityType).values()}"
+								th:value="${priority}" th:text="${priority}"></option>
+					</select>
+					</div>
+				</div>
 
-	<!-- </div> -->
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="todo-update"
+							data-dismiss="modal">수정</button>
+					<button type="button" class="btn close-button" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<script src="/js/default.js"></script>
 </body>
-<script src="/js/default.js"></script>
 </html>
