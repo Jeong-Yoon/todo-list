@@ -71,4 +71,12 @@ public class TaskServiceImpl implements TaskService {
         task.setPriority(taskDTO.getPriority());
         taskRepository.save(task);
     }
+
+    @Override
+    @Transactional
+    public void completeTodo(Long id) {
+        Task task = taskRepository.findById(id).get();
+        task.setComplete(task.isComplete()? false : true);
+    }
+
 }

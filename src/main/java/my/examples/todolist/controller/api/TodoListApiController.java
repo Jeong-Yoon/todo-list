@@ -2,6 +2,7 @@ package my.examples.todolist.controller.api;
 
 import lombok.RequiredArgsConstructor;
 import my.examples.todolist.domain.Task;
+import my.examples.todolist.dto.IdDTO;
 import my.examples.todolist.dto.TaskDTO;
 import my.examples.todolist.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -54,6 +57,12 @@ public class TodoListApiController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         taskService.updateTask(id,taskDTO);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity completeTodo(@RequestBody IdDTO idDTO){
+        taskService.completeTodo(idDTO.getId());
         return new ResponseEntity(HttpStatus.OK);
     }
 

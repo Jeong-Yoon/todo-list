@@ -14,4 +14,5 @@ public interface TaskService {
     public void addTask(TaskDTO taskDTO);
     public void deleteTask(Long id);
     public void updateTask(Long id, TaskDTO taskDTO);
+    public void completeTodo(Long id);
 }
