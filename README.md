@@ -32,5 +32,3 @@ java -jar target/todo-list-0.0.1-SNAPSHOT.jar
 - 마감 기한은 오늘날짜부터 그 이후로 선택이 가능합니다.
 - 우선순위는 HIGH, MEDIUM, LOW 중 선택할 수 있습니다.
 
-2. TODO 삭제
-- x 표시를 눌러 TODO를 삭제할 수 있습니다.
